@@ -1,11 +1,13 @@
 <body>
-    <ul>
+    <div class="movie-list">
         <div class="container">
-            <li *ngFor="let movie of movies">
-                <img class="poster" [src]="'https://image.tmdb.org/t/p/w1280' + movie.poster_path" />
-                <h1>{{ movie.title }}</h1>
-                {{ movie.release_date }}
-            </li>
+            <div class="movie-card" *ngFor="let movie of movies">
+                <img class="poster" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="movie poster">
+                <div class="movie-info">
+                    <h1>{{ movie.title }}</h1>
+                    <p>{{ movie.release_date }}</p>
+                </div>
+            </div>
         </div>
-    </ul>
+    </div>
 </body>
