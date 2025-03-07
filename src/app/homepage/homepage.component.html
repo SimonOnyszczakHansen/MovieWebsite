@@ -1,7 +1,18 @@
 <div class="container">
     <div class="movie-list">
-        <h1>Trending</h1>
-        <input type="checkbox" class="toggle">
+        <div class="header">
+            <h1>Trending</h1>
+            <div class="toggle-container">
+                <label class="toggle-switch">
+                    <input type="checkbox" (change)="toggleView()" [checked]="isDayView">
+                    <div class="toggle-slider">
+                        <span class="toggle-knob"></span>
+                        <span class="toggle-text left">Day</span>
+                        <span class="toggle-text right">Week</span>
+                    </div>
+                </label>
+            </div>
+        </div>
         <button class="scroll-button left" (click)="scrollLeft()">❮</button>
         <button class="scroll-button right" (click)="scrollRight()">❯</button>
         <div class="movieContainer" #movieContainer>

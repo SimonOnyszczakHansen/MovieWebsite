@@ -14,6 +14,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   @ViewChild('firstMovieCard') firstMovieCard!: ElementRef;
   scrollAmount = 0;
   movies: any[] = [];
+  isDayView: boolean = true;
 
   constructor(private tmdbService: TmdbService) {}
 
@@ -62,5 +63,9 @@ export class HomepageComponent implements OnInit, AfterViewInit {
         behavior: 'smooth'
       });
     }
+  }
+
+  toggleView() {
+    this.isDayView = !this.isDayView;
   }
 }
