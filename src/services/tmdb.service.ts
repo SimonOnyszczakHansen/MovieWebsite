@@ -11,10 +11,6 @@ export class TmdbService {
 
     constructor(private http: HttpClient) { }
 
-    getPopularMovies(): Observable<any> {
-        return this.http.get(`${this.apiUrl}/movie/popular?api_key=${environment.apiKey}`);
-    }
-
     getTrendingMovies(): Observable<any> {
         return this.http.get(`${this.apiUrl}/trending/movie/day?api_key=${environment.apiKey}`);
     }

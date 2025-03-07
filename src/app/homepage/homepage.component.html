@@ -1,13 +1,17 @@
-<body>
+<div class="container">
     <div class="movie-list">
-        <div class="container">
-            <div class="movie-card" *ngFor="let movie of movies">
+        <h1>Trending</h1>
+        <input type="checkbox" class="toggle">
+        <button class="scroll-button left" (click)="scrollLeft()">❮</button>
+        <button class="scroll-button right" (click)="scrollRight()">❯</button>
+        <div class="movieContainer" #movieContainer>
+            <div class="movie-card" #firstMovieCard *ngFor="let movie of movies">
                 <img class="poster" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="movie poster">
                 <div class="movie-info">
                     <h1>{{ movie.title }}</h1>
-                    <p>{{ movie.release_date }}</p>
+                    <p class="release_date">{{ movie.release_date | date: 'd MMM yyyy' }}</p>
                 </div>
             </div>
         </div>
     </div>
-</body>
+</div>
