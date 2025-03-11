@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
 import { NgFor, CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -16,7 +17,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   movies: any[] = [];
   isDayView: boolean = true;
 
-  constructor(private tmdbService: TmdbService) {}
+  constructor(private tmdbService: TmdbService, private router: Router) {}
 
   ngOnInit(): void {
     this.getTrendingMovies();
@@ -41,8 +42,8 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   calculateScrollAmount() {
     if (this.firstMovieCard?.nativeElement && this.movieContainer?.nativeElement) {
       const cardWidth = this.firstMovieCard.nativeElement.offsetWidth;
-      const gap = 20;
-      const cardsToScroll = 6;
+      const gap = 22;
+      const cardsToScroll = 5;
       this.scrollAmount = (cardWidth + gap) * cardsToScroll;
     }
   }
@@ -68,5 +69,9 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   toggleView() {
     this.isDayView = !this.isDayView;
     this.getTrendingMovies()
+  }
+
+  goToMovieDetails(movieId: number, movieTitle: string) {
+    this.router.navigate(['/movie', movieId, movieTitle])
   }
 }

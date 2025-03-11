@@ -14,4 +14,16 @@ export class TmdbService {
     getTrendingMovies(timeWindow: 'day' | 'week'): Observable<any> {
         return this.http.get(`${this.apiUrl}/trending/movie/${timeWindow}?api_key=${environment.apiKey}`);
     }
+
+    getMovieDetails(movieId: number) {
+        return this.http.get(`${this.apiUrl}/movie/${movieId}?api_key=${environment.apiKey}`)
+    }
+
+    getMovieVideos(movieId: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/movie/${movieId}/videos?api_key=${environment.apiKey}`)
+    }
+
+    getMovieCredits(movieId: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/movie/${movieId}/credits?api_key=${environment.apiKey}`)
+    }
 }
