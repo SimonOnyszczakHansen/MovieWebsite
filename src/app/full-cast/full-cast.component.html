@@ -1,0 +1,8 @@
+<div *ngFor="let actor of cast">
+    <div class="actor-image">
+        <img [src]="actor.profile_path ? 'https://image.tmdb.org/t/p/w200' + actor.profile_path : 'assets/no-image.jpg'"
+             alt="{{ actor.name }}">
+    </div>                                      
+    <h1>{{ actor.name }}</h1>
+    <p>{{ actor.character }}</p>
+</div>

@@ -1,39 +1,77 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
 import { NgFor, CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule, NgFor, HttpClientModule],
+  imports: [CommonModule, NgFor],
   templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.css'
+  styleUrl: './homepage.component.css',
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit, AfterViewInit {
+  @ViewChild('movieContainer') movieContainer!: ElementRef;
+  @ViewChild('firstMovieCard') firstMovieCard!: ElementRef;
+  scrollAmount = 0;
   movies: any[] = [];
+  isDayView: boolean = true;
 
-  constructor(private tmdbService: TmdbService) { }
+  constructor(private tmdbService: TmdbService, private router: Router) {}
 
   ngOnInit(): void {
     this.getTrendingMovies();
   }
 
-  getPopularMovies() {
-    this.tmdbService.getPopularMovies().subscribe(
-      (data: any) => {
-        this.movies = data.results;
-        console.log(this.movies);
-      }
-    )
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.calculateScrollAmount();
+    }, 0);
   }
 
   getTrendingMovies() {
-    this.tmdbService.getTrendingMovies().subscribe(
-      (data: any) => {
-        this.movies = data.results;
-        console.log(this.movies);
-      }
-    )
+    const timeWindow = this.isDayView ? 'day' : 'week';
+    this.tmdbService.getTrendingMovies(timeWindow).subscribe((data: any) => {
+      this.movies = data.results;
+      setTimeout(() => {
+        this.calculateScrollAmount();
+      }, 0);
+    });
+  }
+
+  calculateScrollAmount() {
+    if (this.firstMovieCard?.nativeElement && this.movieContainer?.nativeElement) {
+      const cardWidth = this.firstMovieCard.nativeElement.offsetWidth;
+      const gap = 22;
+      const cardsToScroll = 5;
+      this.scrollAmount = (cardWidth + gap) * cardsToScroll;
+    }
+  }
+
+  scrollLeft() {
+    if (this.movieContainer?.nativeElement) {
+      this.movieContainer.nativeElement.scrollBy({
+        left: -this.scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  scrollRight() {
+    if (this.movieContainer?.nativeElement) {
+      this.movieContainer.nativeElement.scrollBy({
+        left: this.scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  toggleView() {
+    this.isDayView = !this.isDayView;
+    this.getTrendingMovies()
+  }
+
+  goToMovieDetails(movieId: number, movieTitle: string) {
+    this.router.navigate(['/movie', movieId, movieTitle])
   }
 }

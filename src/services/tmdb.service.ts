@@ -11,11 +11,19 @@ export class TmdbService {
 
     constructor(private http: HttpClient) { }
 
-    getPopularMovies(): Observable<any> {
-        return this.http.get(`${this.apiUrl}/movie/popular?api_key=${environment.apiKey}`);
+    getTrendingMovies(timeWindow: 'day' | 'week'): Observable<any> {
+        return this.http.get(`${this.apiUrl}/trending/movie/${timeWindow}?api_key=${environment.apiKey}`);
     }
 
-    getTrendingMovies(): Observable<any> {
-        return this.http.get(`${this.apiUrl}/trending/movie/day?api_key=${environment.apiKey}`);
+    getMovieDetails(movieId: number) {
+        return this.http.get(`${this.apiUrl}/movie/${movieId}?api_key=${environment.apiKey}`)
+    }
+
+    getMovieVideos(movieId: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/movie/${movieId}/videos?api_key=${environment.apiKey}`)
+    }
+
+    getMovieCredits(movieId: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/movie/${movieId}/credits?api_key=${environment.apiKey}`)
     }
 }

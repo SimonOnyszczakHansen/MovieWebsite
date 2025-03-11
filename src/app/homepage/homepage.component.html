@@ -1,11 +1,28 @@
-<body>
-    <ul>
-        <div class="container">
-            <li *ngFor="let movie of movies">
-                <img class="poster" [src]="'https://image.tmdb.org/t/p/w1280' + movie.poster_path" />
-                <h1>{{ movie.title }}</h1>
-                {{ movie.release_date }}
-            </li>
+<div class="container">
+    <div class="movie-list">
+        <div class="header">
+            <h1>Trending</h1>
+            <div class="toggle-container">
+                <label class="toggle-switch">
+                    <input type="checkbox" (change)="toggleView()" [checked]="isDayView">
+                    <div class="toggle-slider">
+                        <span class="toggle-knob"></span>
+                        <span class="toggle-text left">Day</span>
+                        <span class="toggle-text right">Week</span>
+                    </div>
+                </label>
+            </div>
         </div>
-    </ul>
-</body>
+        <button class="scroll-button left" (click)="scrollLeft()">❮</button>
+        <button class="scroll-button right" (click)="scrollRight()">❯</button>
+        <div class="movieContainer" #movieContainer>
+            <div class="movie-card" #firstMovieCard *ngFor="let movie of movies" (click)="goToMovieDetails(movie.id, movie.title)">
+                <img class="poster" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="movie poster">
+                <div class="movie-info">
+                    <h1>{{ movie.title }}</h1>
+                    <p class="release_date">{{ movie.release_date | date: 'd MMM yyyy' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
