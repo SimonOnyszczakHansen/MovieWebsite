@@ -29,9 +29,9 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   }
 
   getTrendingMovies() {
-    this.tmdbService.getTrendingMovies().subscribe((data: any) => {
+    const timeWindow = this.isDayView ? 'day' : 'week';
+    this.tmdbService.getTrendingMovies(timeWindow).subscribe((data: any) => {
       this.movies = data.results;
-      console.log('Movies:', this.movies);
       setTimeout(() => {
         this.calculateScrollAmount();
       }, 0);
@@ -67,5 +67,6 @@ export class HomepageComponent implements OnInit, AfterViewInit {
 
   toggleView() {
     this.isDayView = !this.isDayView;
+    this.getTrendingMovies()
   }
 }
