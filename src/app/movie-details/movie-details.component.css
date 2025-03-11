@@ -236,6 +236,8 @@ p[title]:before {
     gap: 0.5rem;
     backdrop-filter: blur(5px);
     margin: 0 auto;
+    height: 12%;
+    align-self: center;
 }
 
 .cast-container button:hover {
