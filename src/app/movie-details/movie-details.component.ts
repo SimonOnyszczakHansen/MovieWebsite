@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { CommonModule, Location } from '@angular/common';
 
@@ -17,7 +17,7 @@ export class MovieDetailsComponent implements OnInit {
   trailerUrl: string = '';
   cast: any[] = []
 
-  constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private location: Location) {}
+  constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private router: Router, private location: Location) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id')
@@ -62,5 +62,9 @@ export class MovieDetailsComponent implements OnInit {
 
   goBack() {
     this.location.back()
+  }
+
+  viewFullCast(movieId: number, movieTitle: string) {
+    this.router.navigate(['/movie', movieId, movieTitle, 'cast'])
   }
 }
