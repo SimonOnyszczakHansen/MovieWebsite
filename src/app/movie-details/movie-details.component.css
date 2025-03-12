@@ -15,7 +15,7 @@
     object-fit: cover;
     z-index: -1;
     opacity: 0.3;
-    filter: blur(5px);
+    filter: blur(10px);
 }
 
 .movie-header {
@@ -260,15 +260,64 @@ p[title]:before {
     transform: translateX(3px);
 }
 
+.networks-container {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    backdrop-filter: blur(12px);
+}
+
+.networks-container h2 {
+    color: #66D9EF;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.network-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.network-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    transition: transform 0.3 ease;
+}
+
+.network-logo {
+    height: 40px;
+    width: auto;
+    max-width: 100px;
+    object-fit: contain;
+}
+
+.network-item:hover .network-logo {
+    filter: grayscale(0);
+}
+
 @media (max-width: 768px) {
     .cast-container button {
         width: 100%;
         justify-content: center;
         margin: 1rem 0 0 0;
     }
-}
 
-@media (max-width: 768px) {
+    .network-list {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .network-item {
+        width: 100%;
+    }
+
     button {
         top: 1rem;
         left: 1rem;

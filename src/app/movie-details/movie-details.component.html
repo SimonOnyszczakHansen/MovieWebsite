@@ -21,7 +21,15 @@
                     <p *ngIf="mediaType === 'movie'" title="Runtime">⏳ {{ formatRuntime(runtime) }}</p>
                     <p *ngIf="mediaType === 'tv'" title="Episodes">📺 {{ media.number_of_episodes }} Episodes</p>
                 </div>
-
+                <div class="networks-container" *ngIf="media?.networks?.length">
+                    <h2>📺 Networks</h2>
+                    <div class="network-list">
+                        <div class="network-item" *ngFor="let network of media.networks">
+                            <img [src]="network.logo_path ? 'https://image.tmdb.org/t/p/w200' + network.logo_path : 'assets/no-image.jpg'"
+                                alt="{{ network.name }} logo" class="network-logo">
+                        </div>
+                    </div>
+                </div>
                 <div class="movie-details">
                     <p><strong>Overview:</strong> {{ media.overview }}</p>
                     <p>
@@ -48,8 +56,8 @@
                 <div *ngFor="let actor of cast | slice:0:6" class="actor-card">
                     <div class="actor-image">
                         <img [src]="actor.profile_path ? 'https://image.tmdb.org/t/p/w200' + actor.profile_path : 'assets/no-image.jpg'"
-                             alt="{{ actor.name }}">
-                    </div>                                      
+                            alt="{{ actor.name }}">
+                    </div>
                     <h1>{{ actor.name }}</h1>
                     <p>{{ actor.character }}</p>
                 </div>
