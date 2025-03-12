@@ -189,7 +189,7 @@ p[title]:before {
 
 .back-button {
     position: fixed;
-    top: 5rem;
+    top: 7rem;
     left: 2rem;
     padding: 0.8rem 1.5rem;
     background: rgba(102, 217, 239, 0.1);

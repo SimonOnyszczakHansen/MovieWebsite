@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { TmdbService } from '../../services/tmdb.service';
 import { NgFor, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-homepage',
@@ -14,13 +15,13 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   @ViewChild('movieContainer') movieContainer!: ElementRef;
   @ViewChild('firstMovieCard') firstMovieCard!: ElementRef;
   scrollAmount = 0;
-  movies: any[] = [];
+  combinedContent: any[] = [];
   isDayView: boolean = true;
 
-  constructor(private tmdbService: TmdbService, private router: Router) {}
+  constructor(private tmdbService: TmdbService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getTrendingMovies();
+    this.getTrendingContent();
   }
 
   ngAfterViewInit(): void {
@@ -29,14 +30,22 @@ export class HomepageComponent implements OnInit, AfterViewInit {
     }, 0);
   }
 
-  getTrendingMovies() {
+  getTrendingContent() {
     const timeWindow = this.isDayView ? 'day' : 'week';
-    this.tmdbService.getTrendingMovies(timeWindow).subscribe((data: any) => {
-      this.movies = data.results;
-      setTimeout(() => {
-        this.calculateScrollAmount();
-      }, 0);
+    forkJoin({
+      movies: this.tmdbService.getTrendingContent(timeWindow),
+    }).subscribe(({ movies }) => {
+      this.combinedContent = [...movies.results]
+        .sort((a, b) => b.popularity - a.popularity);
+
+      this.updateView();
     });
+  }
+
+  updateView() {
+    setTimeout(() => {
+      this.calculateScrollAmount();
+    }, 0);
   }
 
   calculateScrollAmount() {
@@ -68,10 +77,12 @@ export class HomepageComponent implements OnInit, AfterViewInit {
 
   toggleView() {
     this.isDayView = !this.isDayView;
-    this.getTrendingMovies()
+    this.getTrendingContent();
   }
 
-  goToMovieDetails(movieId: number, movieTitle: string) {
-    this.router.navigate(['/movie', movieId, movieTitle])
+  goToDetails(item: any) {
+    const route = item.media_type === 'movie' ? '/movie' : '/tv';
+    const title = item.title || item.name;
+    this.router.navigate([route, item.id, title]);
   }
 }

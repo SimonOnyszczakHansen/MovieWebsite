@@ -11,19 +11,41 @@ export class TmdbService {
 
     constructor(private http: HttpClient) { }
 
-    getTrendingMovies(timeWindow: 'day' | 'week'): Observable<any> {
-        return this.http.get(`${this.apiUrl}/trending/movie/${timeWindow}?api_key=${environment.apiKey}`);
+    getTrendingContent(timeWindow: 'day' | 'week'): Observable<any> {
+        return this.http.get(`${this.apiUrl}/trending/all/${timeWindow}?api_key=${environment.apiKey}`);
     }
 
-    getMovieDetails(movieId: number) {
-        return this.http.get(`${this.apiUrl}/movie/${movieId}?api_key=${environment.apiKey}`)
+    getMovieDetails(movieId: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/movie/${movieId}?api_key=${environment.apiKey}`);
     }
 
     getMovieVideos(movieId: number): Observable<any> {
-        return this.http.get(`${this.apiUrl}/movie/${movieId}/videos?api_key=${environment.apiKey}`)
+        return this.http.get(`${this.apiUrl}/movie/${movieId}/videos?api_key=${environment.apiKey}`);
     }
 
     getMovieCredits(movieId: number): Observable<any> {
-        return this.http.get(`${this.apiUrl}/movie/${movieId}/credits?api_key=${environment.apiKey}`)
+        return this.http.get(`${this.apiUrl}/movie/${movieId}/credits?api_key=${environment.apiKey}`);
+    }
+
+    getTvShowDetails(tvId: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/tv/${tvId}?api_key=${environment.apiKey}`);
+    }
+
+    getTvShowVideos(tvId: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/tv/${tvId}/videos?api_key=${environment.apiKey}`);
+    }
+
+    getTvShowCredits(tvId: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/tv/${tvId}/credits?api_key=${environment.apiKey}`);
+    }
+
+    searchMulti(query: string): Observable<any> {
+        return this.http.get(
+            `${this.apiUrl}/search/multi?api_key=${environment.apiKey}&query=${encodeURIComponent(query)}`
+        );
+    }
+
+    getCombinedCredits(personId: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/person/${personId}/combined_credits?api_key=${environment.apiKey}`);
     }
 }

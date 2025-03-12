@@ -16,11 +16,20 @@
         <button class="scroll-button left" (click)="scrollLeft()">❮</button>
         <button class="scroll-button right" (click)="scrollRight()">❯</button>
         <div class="movieContainer" #movieContainer>
-            <div class="movie-card" #firstMovieCard *ngFor="let movie of movies" (click)="goToMovieDetails(movie.id, movie.title)">
-                <img class="poster" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="movie poster">
+            <div class="movie-card" 
+                 #firstMovieCard 
+                 *ngFor="let item of combinedContent" 
+                 (click)="goToDetails(item)">
+                
+                <img class="poster" 
+                     [src]="'https://image.tmdb.org/t/p/w500' + item.poster_path" 
+                     alt="{{ item.title || item.name }} poster">
+                
                 <div class="movie-info">
-                    <h1>{{ movie.title }}</h1>
-                    <p class="release_date">{{ movie.release_date | date: 'd MMM yyyy' }}</p>
+                    <h1>{{ item.title || item.name }}</h1>
+                    <p class="release_date">
+                        {{ (item.release_date || item.first_air_date) | date: 'd MMM yyyy' }}
+                    </p>
                 </div>
             </div>
         </div>
