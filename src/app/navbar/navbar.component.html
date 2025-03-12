@@ -1,1 +1,23 @@
-<p>navbar works!</p>
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-logo" (click)="goToHome()">
+            <img>
+        </div>
+        <ul class="navbar-links" [class.active]="isMobileMenuOpen">
+            <li (click)="goToHome()"><a>Home</a></li>
+            <li (click)="goToMovies()"><a>Movies</a></li>
+            <li (click)="goToTVSeries()"><a>TV Series</a></li>
+            <li (click)="goToGenres()"><a>Genres</a></li>
+            <li (click)="goToActors()"><a>Actors</a></li>
+        </ul>
+        <div class="navbar-search">
+            <input type="text" placeholder="Search..." aria-label="Search">
+            <button>
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <button class="navbar-toggle" (click)="toggleMobileMenu()" aria-label="Toggle Navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</nav>

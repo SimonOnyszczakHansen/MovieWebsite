@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd, Route } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from "./navbar/navbar.component";
 
@@ -10,6 +10,16 @@ import { NavbarComponent } from "./navbar/navbar.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'MovieWebsite';
+
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0)
+      }
+    })
+  }
 }
