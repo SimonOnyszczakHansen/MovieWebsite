@@ -1,37 +1,43 @@
 <div class="container">
     <button class="back-button" (click)="goBack()">Back</button>
-    <div *ngIf="movie">
-        <img class="backdrop" [src]="'https://image.tmdb.org/t/p/w500' + movie.backdrop_path">
+    <div *ngIf="media">
+        <img class="backdrop" [src]="'https://image.tmdb.org/t/p/w500' + media.backdrop_path">
 
         <div class="movie-header">
-            <img class="poster" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path">
+            <img class="poster" [src]="'https://image.tmdb.org/t/p/w500' + media.poster_path">
 
             <div class="movie-info">
-                <h1>{{movie.title}}</h1>
+                <h1>{{ title }}</h1>
 
                 <div *ngIf="trailerUrl">
-                    <a class="trailer-link" [href]="trailerUrl" target="_blank">🎬 Watch Trailer</a>
+                    <a class="trailer-link" [href]="trailerUrl" target="_blank">
+                        <i class="fas fa-film"></i> Watch Trailer
+                    </a>
                 </div>
 
                 <div class="movie-stats">
-                    <p title="Release Date">📅 {{ movie.release_date | date:'d MMM yyyy' }}</p>
-                    <p title="Rating">⭐ {{ movie.vote_average }}</p>
-                    <p title="Runtime">⏳ {{ formatRuntime(movie.runtime) }}</p>
+                    <p title="Release Date">📅 {{ releaseDate | date:'d MMM yyyy' }}</p>
+                    <p title="Rating">⭐ {{ media.vote_average }}</p>
+                    <p *ngIf="mediaType === 'movie'" title="Runtime">⏳ {{ formatRuntime(runtime) }}</p>
+                    <p *ngIf="mediaType === 'tv'" title="Episodes">📺 {{ media.number_of_episodes }} Episodes</p>
                 </div>
 
                 <div class="movie-details">
-                    <p><strong>Overview:</strong> {{ movie.overview }}</p>
+                    <p><strong>Overview:</strong> {{ media.overview }}</p>
                     <p>
-                        <strong>Genres:</strong>
-                        <span *ngFor="let genre of movie.genres; let i = index">
-                            {{ genre.name }}<span *ngIf="i < movie.genres.length - 1">, </span>
+                        <strong>{{ mediaType === 'movie' ? 'Genres' : 'Categories' }}:</strong>
+                        <span *ngFor="let genre of media.genres; let i = index">
+                            {{ genre.name }}<span *ngIf="i < media.genres.length - 1">, </span>
                         </span>
+                    </p>
+                    <p *ngIf="mediaType === 'tv' && creators">
+                        <strong>Creators:</strong> {{ creators }}
                     </p>
                 </div>
 
-                <div class="movie-stats">
-                    <p title="Budget">💰 {{ movie.budget | currency:'USD':'symbol':'1.0-0' }}</p>
-                    <p title="Revenue">💵 {{ movie.revenue | currency:'USD':'symbol':'1.0-0' }}</p>
+                <div class="movie-stats" *ngIf="mediaType === 'movie'">
+                    <p title="Budget">💰 {{ media.budget | currency:'USD':'symbol':'1.0-0' }}</p>
+                    <p title="Revenue">💵 {{ media.revenue | currency:'USD':'symbol':'1.0-0' }}</p>
                 </div>
             </div>
         </div>
@@ -47,7 +53,8 @@
                     <h1>{{ actor.name }}</h1>
                     <p>{{ actor.character }}</p>
                 </div>
-                <button *ngIf="cast.length > 6" (click)="viewFullCast(movie.id, movie.title)">View More</button>
+                <button *ngIf="cast.length > 6" (click)="viewFullCast()">View More</button>
             </div>
         </div>
     </div>
+</div>

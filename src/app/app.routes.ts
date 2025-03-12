@@ -7,6 +7,6 @@ import { FullCastComponent } from './full-cast/full-cast.component';
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomepageComponent},
-    {path: 'movie/:id/:title', component: MovieDetailsComponent},
-    {path: 'movie/:id/:title/cast', component: FullCastComponent}
+    {path: ':mediaType/:id/:title', component: MovieDetailsComponent},
+    {path: ':mediaType/:id/:title/cast', component: FullCastComponent}
 ];

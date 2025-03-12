@@ -12,46 +12,74 @@ import { CommonModule, Location } from '@angular/common';
   styleUrl: './movie-details.component.css'
 })
 export class MovieDetailsComponent implements OnInit {
-  movie: any;
-  movieId!: number
+  media: any;
+  mediaId!: number
+  mediaType!: string;
   trailerUrl: string = '';
   cast: any[] = []
 
-  constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private router: Router, private location: Location) {}
+  constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id')
-    if(id) {
-      this.movieId = +id
-      this.getMovieDetails(this.movieId);
-      this.getMovieTrailer(this.movieId);
-      this.getMovieCredits(this.movieId)
+    this.mediaType = this.route.snapshot.paramMap.get('mediaType') || 'movie';
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.mediaId = +id;
+      this.getMediaDetails();
+      this.getMediaCredits();
+      this.getMediaTrailer();
     }
   }
 
-  getMovieDetails(movieId: number) {
-    this.tmdbService.getMovieDetails(movieId).subscribe(data => {
-      this.movie = data
-    })
+  getMediaDetails() {
+    if (this.mediaType === 'movie') {
+      this.tmdbService.getMovieDetails(this.mediaId).subscribe(data => {
+        this.media = data
+      })
+    } else {
+      this.tmdbService.getTvShowDetails(this.mediaId).subscribe(data => {
+        this.media = data
+      })
+    }
   }
 
-  getMovieTrailer(movieId: number) {
-    this.tmdbService.getMovieVideos(movieId).subscribe(data => {
-      if (data && data.results && data.results.length > 0) {
-        const trailer = data.results.find((video: any) =>
-          video.type === 'Trailer' && video.site === 'YouTube'
-        );
-        if (trailer) {
-          this.trailerUrl = `https://www.youtube.com/watch?v=${trailer.key}`;
+  getMediaTrailer() {
+    if (this.mediaType === 'movie') {
+      this.tmdbService.getMovieVideos(this.mediaId).subscribe(data => {
+        if (data && data.results && data.results.length > 0) {
+          const trailer = data.results.find((video: any) =>
+            video.type === 'Trailer' && video.site === 'YouTube'
+          );
+          if (trailer) {
+            this.trailerUrl = `https://www.youtube.com/watch?v=${trailer.key}`;
+          }
         }
-      }
-    });
+      });
+    } else {
+      this.tmdbService.getTvShowVideos(this.mediaId).subscribe(data => {
+        if (data && data.results && data.results.length > 0) {
+          const trailer = data.results.find((video: any) =>
+            video.type === 'Trailer' && video.site === 'YouTube'
+          );
+          if (trailer) {
+            this.trailerUrl = `https://www.youtube.com/watch?v=${trailer.key}`
+          }
+        }
+      })
+    }
   }
 
-  getMovieCredits(movieId: number) {
-    this.tmdbService.getMovieCredits(movieId).subscribe(data => {
-      this.cast = data.cast
-    })
+  getMediaCredits() {
+    if (this.mediaType === 'movie') {
+      this.tmdbService.getMovieCredits(this.mediaId).subscribe(data => {
+        this.cast = data.cast
+      })
+    } else {
+      this.tmdbService.getTvShowCredits(this.mediaId).subscribe(data => {
+        this.cast = data.cast
+      })
+    }
   }
 
   formatRuntime(runtime: number): string {
@@ -64,7 +92,23 @@ export class MovieDetailsComponent implements OnInit {
     this.location.back()
   }
 
-  viewFullCast(movieId: number, movieTitle: string) {
-    this.router.navigate(['/movie', movieId, movieTitle, 'cast'])
+  viewFullCast() {
+    this.router.navigate([this.mediaType, this.mediaId, this.media.title || this.media.name, 'cast'])
+  }
+
+  get title(): string {
+    return this.media?.title || this.media?.name || '';
+  }
+
+  get releaseDate(): string {
+    return this.media?.release_date || this.media?.first_air_date;
+  }
+
+  get runtime(): number {
+    return this.mediaType === 'movie' ? this.media?.runtime : this.media?.episodes_run_time?.[0] || 0;
+  }
+
+  get creators(): string {
+    return this.media?.created_by?.map((c: any) => c.name).join(', ')
   }
 }
