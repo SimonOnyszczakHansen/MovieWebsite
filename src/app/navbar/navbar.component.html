@@ -1,10 +1,10 @@
 <nav class="navbar">
     <div class="navbar-container">
-      <div class="navbar-logo" (click)="goToHome()">
-        <img>
-      </div>
+      <button class="button" data-text="Awesome" (click)="goToHome()">
+        <span class="actual-text">&nbsp;title&nbsp;</span>
+        <span aria-hidden="true" class="hover-text">&nbsp;title&nbsp;</span>
+    </button>
       <ul class="navbar-links" [class.active]="isMobileMenuOpen">
-        <li (click)="goToHome()"><a>Home</a></li>
         <li (click)="goToMovies()"><a>Movies</a></li>
         <li (click)="goToTVSeries()"><a>TV Series</a></li>
         <li (click)="goToGenres()"><a>Genres</a></li>
