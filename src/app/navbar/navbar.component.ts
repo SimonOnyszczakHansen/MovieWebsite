@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { TmdbService } from '../../services/tmdb.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 interface SearchResult {
   id: number;
@@ -25,8 +26,21 @@ export class NavbarComponent {
   searchResults: any[] = [];
   showResults: boolean = false;
   isMobileMenuOpen: boolean = false;
+  private routerSub!: Subscription
 
-  constructor(private router: Router, private tmdbService: TmdbService) { }
+  constructor(private router: Router, private tmdbService: TmdbService) {
+    this.routerSub = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.searchQuery = '';
+        this.searchResults = [];
+        this.showResults = false;
+      }
+    })
+  }
+
+  ngOnDestroy() {
+    this.routerSub.unsubscribe();
+  }
 
   onSearchInput() {
     if (this.searchQuery.length > 2) {
@@ -47,19 +61,22 @@ export class NavbarComponent {
 
   navigateToResult(result: SearchResult) {
     this.showResults = false;
+    this.searchResults = [];
     this.searchQuery = '';
 
-    switch(result.media_type) {
-      case 'movie':
-        this.router.navigate(['/movie', result.id, result.title]);
-        break;
-      case 'tv':
-        this.router.navigate(['/tv', result.id, result.name]);
-        break;
-      case 'person':
-        this.router.navigate(['/actor', result.id, result.name]);
-        break;
-    }
+    setTimeout(() => {
+      switch (result.media_type) {
+        case 'movie':
+          this.router.navigate(['movie', result.id, result.title]);
+          break;
+        case 'tv':
+          this.router.navigate(['tv', result.id, result.name]);
+          break;
+        case 'person':
+          this.router.navigate(['person', result.id, result.name]);
+          break;
+      }
+    }, 50);
   }
 
   closeSearchResults() {
@@ -93,9 +110,5 @@ export class NavbarComponent {
 
   closeMobileMenu() {
     this.isMobileMenuOpen = false;
-  }
-
-  onSearch() {
-
   }
 }

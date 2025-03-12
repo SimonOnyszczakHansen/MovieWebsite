@@ -28,7 +28,7 @@
           <div 
             class="search-result-item" 
             *ngFor="let result of searchResults"
-            (click)="navigateToResult(result)"
+            (mousedown)="navigateToResult(result)"
           >
             <img [src]="result.poster_path || result.profile_path ? 
                       'https://image.tmdb.org/t/p/w92' + (result.poster_path || result.profile_path) : 
