@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
-import { NgFor } from '@angular/common';
+import { NgFor, Location} from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -12,28 +12,47 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FullCastComponent implements OnInit {
   cast: any[] = []
-  movie: any;
-  movieId!: number;
+  media: any;
+  mediaId!: number;
+  mediaType!: string;
 
-  constructor(private tmdbService: TmdbService, private route: ActivatedRoute) { }
+  constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit(): void {
+    this.mediaType = this.route.snapshot.paramMap.get('mediaType') || 'movie';
     const id = this.route.snapshot.paramMap.get('id')
     if (id) {
-      this.movieId = +id
-      this.getMovieCredits(this.movieId)
+      this.mediaId = +id
+      this.getMediaCredits()
+      this.getMediaDetails()
     }
   }
 
-  getMovieCredits(movieId: number) {
-    this.tmdbService.getMovieCredits(movieId).subscribe(data => {
-      this.cast = data.cast
-    })
+  getMediaCredits() {
+    if (this.mediaType === 'movie') {
+      this.tmdbService.getMovieCredits(this.mediaId).subscribe(data => {
+        this.cast = data.cast
+      })
+    } else {
+      this.tmdbService.getTvShowCredits(this.mediaId).subscribe(data => {
+        this.cast = data.cast
+      })
+    }
   }
 
-  getMovieDetails(movieId: number) {
-    this.tmdbService.getMovieDetails(movieId).subscribe(data => {
-      this.movie = data
-    })
+  getMediaDetails() {
+    if (this.mediaType === 'movie') {
+      this.tmdbService.getMovieDetails(this.mediaId).subscribe(data => {
+        this.media = data
+      })
+    } else {
+      this.tmdbService.getTvShowDetails(this.mediaId).subscribe(data => {
+        this.media = data
+      })
+    }
+  }
+
+  goBack() {
+    this.location.back()
   }
 }
