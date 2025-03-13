@@ -291,6 +291,7 @@ input:checked+.toggle-slider .toggle-knob {
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, rgba(31, 31, 31, 0.9) 30%, rgba(31, 31, 31, 0) 100%);
+    border-radius: 20px;
 }
 
 .hero-title {

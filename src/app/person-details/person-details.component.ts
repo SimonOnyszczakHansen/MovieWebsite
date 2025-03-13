@@ -13,25 +13,25 @@ import { CommonModule } from '@angular/common';
 })
 export class PersonDetailsComponent implements OnInit {
   personId!: number;
-  personInfo: any[] = [];
+  person: any;
   private routeSub!: Subscription
 
-  constructor(private tmdbService: TmdbService, private route: ActivatedRoute) {}
+  constructor(private tmdbService: TmdbService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
       this.personId = +params['id']
+      this.getPersonDetails()
     })
-    this.getPersonDetails()
   }
 
   ngOnDestroy() {
-    this.routeSub
+    this.routeSub.unsubscribe()
   }
 
   getPersonDetails() {
     this.tmdbService.getPersonDetails(this.personId).subscribe(data => {
-      this.personInfo = data;
+      this.person = data;
     })
   }
 }
