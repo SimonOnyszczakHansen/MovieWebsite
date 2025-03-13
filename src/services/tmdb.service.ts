@@ -39,6 +39,14 @@ export class TmdbService {
         return this.http.get(`${this.apiUrl}/tv/${tvId}/credits?api_key=${environment.apiKey}`);
     }
 
+    getPersonDetails(personId: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/person/${personId}?api_key=${environment.apiKey}`)
+    }
+
+    getMoviesDiscover(pageNumber: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/discover/movie?api_key=${environment.apiKey}&page=${pageNumber}`)
+    }
+
     searchMulti(query: string): Observable<any> {
         return this.http.get(
             `${this.apiUrl}/search/multi?api_key=${environment.apiKey}&query=${encodeURIComponent(query)}`

@@ -1,23 +1,57 @@
 <nav class="navbar">
     <div class="navbar-container">
-        <div class="navbar-logo" (click)="goToHome()">
-            <img>
-        </div>
-        <ul class="navbar-links" [class.active]="isMobileMenuOpen">
-            <li (click)="goToHome()"><a>Home</a></li>
-            <li (click)="goToMovies()"><a>Movies</a></li>
-            <li (click)="goToTVSeries()"><a>TV Series</a></li>
-            <li (click)="goToGenres()"><a>Genres</a></li>
-            <li (click)="goToActors()"><a>Actors</a></li>
-        </ul>
-        <div class="navbar-search">
-            <input type="text" placeholder="Search..." aria-label="Search">
-            <button>
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-        <button class="navbar-toggle" (click)="toggleMobileMenu()" aria-label="Toggle Navigation">
-            <i class="fas fa-bars"></i>
+      <button class="button" data-text="Awesome" (click)="goToHome()">
+        <span class="actual-text">&nbsp;title&nbsp;</span>
+        <span aria-hidden="true" class="hover-text">&nbsp;title&nbsp;</span>
+    </button>
+      <ul class="navbar-links" [class.active]="isMobileMenuOpen">
+        <li (click)="goToMovies()"><a>Movies</a></li>
+        <li (click)="goToTVSeries()"><a>TV Series</a></li>
+        <li (click)="goToGenres()"><a>Genres</a></li>
+        <li (click)="goToActors()"><a>Actors</a></li>
+      </ul>
+      <div class="navbar-search">
+        <input 
+          type="text" 
+          placeholder="Search..." 
+          aria-label="Search"
+          [(ngModel)]="searchQuery"
+          (input)="onSearchInput()"
+          (focus)="showResults = true"
+          (blur)="closeSearchResults()"
+        >
+        <button (click)="onSearchInput()">
+          <i class="fas fa-search"></i>
         </button>
+      
+        <div class="search-results" *ngIf="showResults && searchResults.length">
+          <div 
+            class="search-result-item" 
+            *ngFor="let result of searchResults"
+            (mousedown)="navigateToResult(result)"
+          >
+          <img [src]="result.poster_path || result.profile_path ? 
+          'https://image.tmdb.org/t/p/w92' + (result.poster_path || result.profile_path) : 
+          'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojMWYxZjFmO2ZvbnQtZmFtaWx5OkFyaWFsIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWYxZjFmIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2NkQ5RUYiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj4KICAgIE5vIEltYWdlCiAgPC90ZXh0Pgo8L3N2Zz4='"
+     alt="{{ result.title || result.name || 'No image' }}"
+     class="search-result-image"
+     [class.placeholder-image]="!result.poster_path && !result.profile_path">
+            <div class="result-info">
+              <h4>{{ result.title || result.name }}</h4>
+              <span class="media-type">
+                {{ 
+                  result.media_type === 'movie' ? 'Movie' :
+                  result.media_type === 'tv' ? 'TV Show' :
+                  'Actor'
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="navbar-toggle" (click)="toggleMobileMenu()" aria-label="Toggle Navigation">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
-</nav>
+  </nav>
+  

@@ -3,11 +3,12 @@ import { TmdbService } from '../../services/tmdb.service';
 import { NgFor, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { TruncatePipe } from '../../shared/pipes/truncate.pipe';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule, NgFor],
+  imports: [CommonModule, NgFor, TruncatePipe],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css',
 })
@@ -16,12 +17,14 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   @ViewChild('firstMovieCard') firstMovieCard!: ElementRef;
   scrollAmount = 0;
   combinedContent: any[] = [];
+  heroContent: any = {}
   isDayView: boolean = true;
 
   constructor(private tmdbService: TmdbService, private router: Router) { }
 
   ngOnInit(): void {
     this.getTrendingContent();
+    this.getHeroContent();
   }
 
   ngAfterViewInit(): void {
@@ -31,14 +34,19 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   }
 
   getTrendingContent() {
-    const timeWindow = this.isDayView ? 'day' : 'week';
-    forkJoin({
-      movies: this.tmdbService.getTrendingContent(timeWindow),
-    }).subscribe(({ movies }) => {
+    const timeWindow = this.isDayView ? 'week' : 'day';
+    this.tmdbService.getTrendingContent(timeWindow).subscribe(movies => {
       this.combinedContent = [...movies.results]
         .sort((a, b) => b.popularity - a.popularity);
-
       this.updateView();
+    });
+  }
+
+  getHeroContent() {
+    this.tmdbService.getTrendingContent('week').subscribe(movies => {
+      const results = movies.results.sort((a: any, b: any) => b.popularity - a.popularity);
+      const randomIndex = Math.floor(Math.random() * Math.min(5, results.length));
+      this.heroContent = results[randomIndex] || {};
     });
   }
 

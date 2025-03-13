@@ -3,6 +3,7 @@ import { TmdbService } from '../../services/tmdb.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { CommonModule, Location } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-movie-details',
@@ -17,19 +18,27 @@ export class MovieDetailsComponent implements OnInit {
   mediaType!: string;
   trailerUrl: string = '';
   cast: any[] = []
+  private routeSub!: Subscription
 
   constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
-    this.mediaType = this.route.snapshot.paramMap.get('mediaType') || 'movie';
-    const id = this.route.snapshot.paramMap.get('id');
-
-    if (id) {
-      this.mediaId = +id;
+    this.routeSub = this.route.params.subscribe(params => {
+      this.mediaType = params['mediaType'] || 'movie';
+      this.mediaId = +params['id'];
+      
+      this.media = null;
+      this.trailerUrl = '';
+      this.cast = [];
+  
       this.getMediaDetails();
       this.getMediaCredits();
       this.getMediaTrailer();
-    }
+    });
+  }
+
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
   }
 
   getMediaDetails() {

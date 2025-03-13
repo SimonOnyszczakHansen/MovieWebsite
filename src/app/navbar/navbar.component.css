@@ -109,6 +109,106 @@
     color: #66D9EF;
 }
 
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(31, 31, 31, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.search-result-item {
+    display: flex;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.search-result-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.search-result-item img {
+    width: 40px;
+    height: 60px;
+    background: #1f1f1f
+}
+
+.search-result-item img.placeholder-image {
+    object-fit: contain;
+    padding: 0;
+    background: rgba(31, 31, 31, 0.9);
+    border: 1px solid rgba(102, 217, 239, 0.2);
+}
+
+.result-info {
+    flex: 1;
+    margin-left: 1rem
+}
+
+.result-info h4 {
+    color: #E0E0E0;
+    margin: 0;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.media-type {
+    color: #66D9EF;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.button {
+    margin: 0;
+    height: auto;
+    background: transparent;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+.button {
+    --border-right: 6px;
+    --text-stroke-color: rgba(255, 255, 255, 0.6);
+    --animation-color: #66D9EF;
+    --fs-size: 2em;
+    letter-spacing: 3px;
+    text-decoration: none;
+    font-size: var(--fs-size);
+    font-family: "Arial";
+    position: relative;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--text-stroke-color);
+}
+
+.hover-text {
+    position: absolute;
+    box-sizing: border-box;
+    content: attr(data-text);
+    color: var(--animation-color);
+    width: 0%;
+    inset: 0;
+    border-right: var(--border-right) solid var(--animation-color);
+    overflow: hidden;
+    transition: 0.5s;
+    -webkit-text-stroke: 1px var(--animation-color);
+}
+
+.button:hover .hover-text {
+    width: 100%;
+    filter: drop-shadow(0 0 23px var(--animation-color))
+}
+
 @media (max-width: 768px) {
     .navbar-toggle {
         display: block;
@@ -150,5 +250,19 @@
         font-size: 1.5rem;
         cursor: pointer;
         display: block;
+    }
+
+    .navbar-search {
+        width: 100%;
+        order: 3;
+        margin-top: 1rem;
+    }
+
+    .search-results {
+        position: fixed;
+        width: 100vw;
+        left: 0;
+        right: 0;
+        border-radius: 0;
     }
 }

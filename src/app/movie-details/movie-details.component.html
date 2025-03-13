@@ -17,7 +17,7 @@
 
                 <div class="movie-stats">
                     <p title="Release Date">📅 {{ releaseDate | date:'d MMM yyyy' }}</p>
-                    <p title="Rating">⭐ {{ media.vote_average }}</p>
+                    <p title="Rating">⭐ {{ media.vote_average | number: '1.1-1' }}</p>
                     <p *ngIf="mediaType === 'movie'" title="Runtime">⏳ {{ formatRuntime(runtime) }}</p>
                     <p *ngIf="mediaType === 'tv'" title="Episodes">📺 {{ media.number_of_episodes }} Episodes</p>
                 </div>
