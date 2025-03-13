@@ -138,6 +138,14 @@
 .search-result-item img {
     width: 40px;
     height: 60px;
+    background: #1f1f1f
+}
+
+.search-result-item img.placeholder-image {
+    object-fit: contain;
+    padding: 0;
+    background: rgba(31, 31, 31, 0.9);
+    border: 1px solid rgba(102, 217, 239, 0.2);
 }
 
 .result-info {

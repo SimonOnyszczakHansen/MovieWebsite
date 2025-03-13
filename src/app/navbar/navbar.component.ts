@@ -89,6 +89,7 @@ export class NavbarComponent {
   }
 
   goToMovies() {
+    this.router.navigate(['/movies'])
     this.closeMobileMenu()
   }
 

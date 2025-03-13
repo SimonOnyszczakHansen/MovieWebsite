@@ -36,3 +36,9 @@ a {
 a:hover {
   color: #F1C40F;
 }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

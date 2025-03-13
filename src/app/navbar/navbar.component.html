@@ -30,10 +30,12 @@
             *ngFor="let result of searchResults"
             (mousedown)="navigateToResult(result)"
           >
-            <img [src]="result.poster_path || result.profile_path ? 
-                      'https://image.tmdb.org/t/p/w92' + (result.poster_path || result.profile_path) : 
-                      ''"
-                 alt="{{ result.title || result.name }}">
+          <img [src]="result.poster_path || result.profile_path ? 
+          'https://image.tmdb.org/t/p/w92' + (result.poster_path || result.profile_path) : 
+          'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojMWYxZjFmO2ZvbnQtZmFtaWx5OkFyaWFsIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWYxZjFmIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2NkQ5RUYiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj4KICAgIE5vIEltYWdlCiAgPC90ZXh0Pgo8L3N2Zz4='"
+     alt="{{ result.title || result.name || 'No image' }}"
+     class="search-result-image"
+     [class.placeholder-image]="!result.poster_path && !result.profile_path">
             <div class="result-info">
               <h4>{{ result.title || result.name }}</h4>
               <span class="media-type">

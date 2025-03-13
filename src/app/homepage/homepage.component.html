@@ -1,4 +1,31 @@
 <div class="container">
+    <div class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-info">
+                    <h1 class="hero-title">{{ heroContent.title || heroContent.name }}</h1>
+                    <p class="hero-description">{{ heroContent.overview | truncate:150 }}</p>
+                    <div class="hero-details">
+                        <span class="hero-rating"><i class="fas fa-star"></i> {{ heroContent.vote_average | number: '1.1-1'}}</span>
+                        <span class="hero-year">{{ (heroContent.release_date || heroContent.first_air_date) | date: 'yyyy' }}</span>
+                    </div>
+                    <button class="hero-cta" (click)="goToDetails(heroContent)">
+                        <span class="hero-cta-text">Explore Now</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="hero-poster">
+                    <img [src]="'https://image.tmdb.org/t/p/w780' + heroContent.backdrop_path" 
+                         alt="{{ heroContent.title || heroContent.name }} poster"
+                         class="hero-image">
+                    <div class="hero-gradient"></div>
+                </div>
+            </div>
+        </section>
+    
+        <div class="movie-list">
+        </div>
+    </div>
     <div class="movie-list">
         <div class="header">
             <h1>Trending</h1>

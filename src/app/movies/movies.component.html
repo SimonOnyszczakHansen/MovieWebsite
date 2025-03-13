@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="movieContainer">
+        <div *ngFor="let movie of movies">
+            <div class="movie-card" (click)="goToDetails(movie)">
+                <img class="poster" 
+                [src]="movie.poster_path ? 
+                      'https://image.tmdb.org/t/p/w500' + movie.poster_path :
+                      'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTUwIiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojMWYxZjFmO2ZvbnQtZmFtaWx5OkFyaWFsIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWYxZjFmIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2NkQ5RUYiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj4KICAgIE5vIFBvc3RlcgogIDwvdGV4dD4KPC9zdmc+'"
+                alt="{{ movie.title || 'No Poster Available' }}"
+                [class.placeholder-poster]="!movie.poster_path">
+                <div class="movie-info">
+                    <h1 class="title">{{ movie.title }}</h1>
+                    <p class="release-date">{{ movie.release_date | date: 'd MMM yyyy'}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="Show-more-btn"(click)="showMore()">Show More</button>
+</div>
