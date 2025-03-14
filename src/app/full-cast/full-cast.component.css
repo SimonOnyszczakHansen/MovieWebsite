@@ -34,6 +34,7 @@
     backdrop-filter: blur(8px);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid rgba(102, 217, 239, 0.1);
+    cursor: pointer;
 }
 
 .actor-card:hover {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
 import { NgFor, Location} from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-full-cast',
@@ -16,7 +16,7 @@ export class FullCastComponent implements OnInit {
   mediaId!: number;
   mediaType!: string;
 
-  constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private location: Location) { }
+  constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private location: Location, private router: Router) { }
 
   ngOnInit(): void {
     this.mediaType = this.route.snapshot.paramMap.get('mediaType') || 'movie';
@@ -50,6 +50,10 @@ export class FullCastComponent implements OnInit {
         this.media = data
       })
     }
+  }
+
+  goToActorPage(actorId: number, actorName: string) {
+    this.router.navigate(['/person', actorId, actorName])
   }
 
   goBack() {
