@@ -43,6 +43,10 @@ export class TmdbService {
         return this.http.get(`${this.apiUrl}/person/${personId}?api_key=${environment.apiKey}`)
     }
 
+    getPersonCombinedCredits(personId: number): Observable<any> {
+        return this.http.get(`${this.apiUrl}/person/${personId}/combined_cretits?api_key=${environment.apiKey}`)
+    }
+
     getMoviesDiscover(pageNumber: number): Observable<any> {
         return this.http.get(`${this.apiUrl}/discover/movie?api_key=${environment.apiKey}&page=${pageNumber}`)
     }
