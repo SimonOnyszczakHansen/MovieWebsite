@@ -1,6 +1,6 @@
 <div class="container">
     <img class="backdrop" [src]="'https://image.tmdb.org/t/p/w500' + media.backdrop_path">
-    <button class="back-button" (click)="goBack()">Back</button>
+    <button class="back-button" (click)="goBack()"><i class="fas fa-chevron-left"></i>Back</button>
     <div class="cast-container">
         <div class="cast-list">
             <div *ngFor="let actor of cast" class="actor-card" (click)="goToActorPage(actor.id, actor.name)">

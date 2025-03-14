@@ -1,5 +1,5 @@
 <div class="container">
-    <button class="back-button" (click)="goBack()">Back</button>
+    <button class="back-button" (click)="goBack()"><i class="fas fa-chevron-left"></i>Back</button>
     <div *ngIf="media">
         <img class="backdrop" [src]="'https://image.tmdb.org/t/p/w500' + media.backdrop_path">
 
@@ -61,7 +61,7 @@
                         <h1>{{ actor.name }}</h1>
                         <p>{{ actor.character }}</p>
                 </div>
-                <button *ngIf="cast.length > 6" (click)="viewFullCast()">View More</button>
+                <button *ngIf="cast.length > 6" (click)="viewFullCast()">View More<i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </div>

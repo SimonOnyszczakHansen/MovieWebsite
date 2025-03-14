@@ -1,4 +1,5 @@
 <div class="container">
+    <button class="back-button" (click)="goBack()"><i class="fas fa-chevron-left"></i>Back</button>
     <div *ngIf="person">
         <img [src]="'https://image.tmdb.org/t/p/w780' + person.profile_path">
         <h1>{{ person.name }}</h1>
