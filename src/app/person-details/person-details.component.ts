@@ -36,8 +36,8 @@ export class PersonDetailsComponent implements OnInit {
       this.person = data;
     })
 
-    this.tmdbService.getPersonCombinedCredits(this.personId).subscribe(credits => {
-      this.combinedCredits = credits.cast.sort((a: any, b: any) => 
+    this.tmdbService.getPersonCombinedCredits(this.personId).subscribe(data => {
+      this.combinedCredits = data.cast.sort((a: any, b: any) => 
         new Date(b.release_date).getTime() - new Date(a.release_date).getTime()
       )
     })

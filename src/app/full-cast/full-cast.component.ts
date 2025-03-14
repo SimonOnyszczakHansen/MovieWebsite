@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
-import { NgFor, Location} from '@angular/common';
+import { NgFor, Location, NgIf} from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

@@ -16,10 +16,10 @@
                 </div>
 
                 <div class="movie-stats">
-                    <p title="Release Date">📅 {{ releaseDate | date:'d MMM yyyy' }}</p>
-                    <p title="Rating">⭐ {{ media.vote_average | number: '1.1-1' }}</p>
-                    <p *ngIf="mediaType === 'movie'" title="Runtime">⏳ {{ formatRuntime(runtime) }}</p>
-                    <p *ngIf="mediaType === 'tv'" title="Episodes">📺 {{ media.number_of_episodes }} Episodes</p>
+                    <p title="Release Date"> {{ releaseDate | date:'d MMM yyyy' }}</p>
+                    <p title="Rating"> {{ media.vote_average | number: '1.1-1' }}</p>
+                    <p *ngIf="mediaType === 'movie'" title="Runtime"> {{ formatRuntime(runtime) }}</p>
+                    <p *ngIf="mediaType === 'tv'" title="Episodes"> {{ media.number_of_episodes }} Episodes</p>
                 </div>
                 <div class="networks-container" *ngIf="media?.networks?.length">
                     <h2>📺 Networks</h2>
@@ -44,14 +44,14 @@
                 </div>
 
                 <div class="movie-stats" *ngIf="mediaType === 'movie'">
-                    <p title="Budget">💰 {{ media.budget | currency:'USD':'symbol':'1.0-0' }}</p>
-                    <p title="Revenue">💵 {{ media.revenue | currency:'USD':'symbol':'1.0-0' }}</p>
+                    <p title="Budget"> {{ media.budget | currency:'USD':'symbol':'1.0-0' }}</p>
+                    <p title="Revenue"> {{ media.revenue | currency:'USD':'symbol':'1.0-0' }}</p>
                 </div>
             </div>
         </div>
 
         <div class="cast-container">
-            <h1>🌟 Cast</h1>
+            <h1>Cast</h1>
             <div class="cast-list">
                 <div *ngFor="let actor of cast | slice:0:6" class="actor-card" (click)="goToActorPage(actor.id, actor.name)">
                         <div class="actor-image">
