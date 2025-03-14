@@ -105,6 +105,10 @@ export class MovieDetailsComponent implements OnInit {
     this.router.navigate([this.mediaType, this.mediaId, this.media.title || this.media.name, 'cast'])
   }
 
+  goToActorPage(actorId: number, actorName: string) {
+    this.router.navigate(['/person', actorId, actorName])
+  }
+
   get title(): string {
     return this.media?.title || this.media?.name || '';
   }

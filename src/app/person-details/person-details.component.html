@@ -1,1 +1,6 @@
-<p>person-details works!</p>
+<div class="container">
+    <div *ngIf="person">
+        <img [src]="'https://image.tmdb.org/t/p/w780' + person.profile_path">
+        <h1>{{ person.name }}</h1>
+    </div>
+</div>

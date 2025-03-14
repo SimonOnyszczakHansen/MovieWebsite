@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { TmdbService } from '../../services/tmdb.service';
 import { NgFor, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
 import { TruncatePipe } from '../../shared/pipes/truncate.pipe';
 
 @Component({
@@ -43,7 +42,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   }
 
   getHeroContent() {
-    this.tmdbService.getTrendingContent('week').subscribe(movies => {
+    this.tmdbService.getTrendingContent('day').subscribe(movies => {
       const results = movies.results.sort((a: any, b: any) => b.popularity - a.popularity);
       const randomIndex = Math.floor(Math.random() * Math.min(5, results.length));
       this.heroContent = results[randomIndex] || {};
