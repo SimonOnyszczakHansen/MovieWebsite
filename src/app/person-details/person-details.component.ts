@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TmdbService } from '../../services/tmdb.service';
+import { ActorService } from '../../services/actor.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
@@ -19,7 +19,7 @@ export class PersonDetailsComponent implements OnInit {
   private routeSub!: Subscription
   
 
-  constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private location: Location) { }
+  constructor(private actorService: ActorService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
@@ -33,11 +33,11 @@ export class PersonDetailsComponent implements OnInit {
   }
 
   getPersonDetails() {
-    this.tmdbService.getPersonDetails(this.personId).subscribe(data => {
+    this.actorService.getPersonDetails(this.personId).subscribe(data => {
       this.person = data;
     })
 
-    this.tmdbService.getPersonCombinedCredits(this.personId).subscribe(credits => {
+    this.actorService.getPersonCredits(this.personId).subscribe(credits => {
       this.combinedCredits = [...credits.cast, ...credits.crew].filter(credit => credit.popularity).sort((a, b) => {
         return(b.popularity || 0) - (a.popularity || 0);
       }).slice(0, 15)

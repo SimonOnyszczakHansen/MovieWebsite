@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TmdbService } from '../../services/tmdb.service';
+import { MoviesService } from '../../services/movies.service';
+import { TvService } from '../../services/tv.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { CommonModule, Location } from '@angular/common';
@@ -20,7 +21,7 @@ export class MovieDetailsComponent implements OnInit {
   cast: any[] = []
   private routeSub!: Subscription
 
-  constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private router: Router, private location: Location) { }
+  constructor(private tvService: TvService, private moviesService: MoviesService, private route: ActivatedRoute, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
@@ -43,11 +44,11 @@ export class MovieDetailsComponent implements OnInit {
 
   getMediaDetails() {
     if (this.mediaType === 'movie') {
-      this.tmdbService.getMovieDetails(this.mediaId).subscribe(data => {
+      this.moviesService.getMovieDetails(this.mediaId).subscribe(data => {
         this.media = data
       })
     } else {
-      this.tmdbService.getTvShowDetails(this.mediaId).subscribe(data => {
+      this.tvService.getTvShowDetails(this.mediaId).subscribe(data => {
         this.media = data
       })
     }
@@ -55,7 +56,7 @@ export class MovieDetailsComponent implements OnInit {
 
   getMediaTrailer() {
     if (this.mediaType === 'movie') {
-      this.tmdbService.getMovieVideos(this.mediaId).subscribe(data => {
+      this.moviesService.getMovieVideos(this.mediaId).subscribe(data => {
         if (data && data.results && data.results.length > 0) {
           const trailer = data.results.find((video: any) =>
             video.type === 'Trailer' && video.site === 'YouTube'
@@ -66,7 +67,7 @@ export class MovieDetailsComponent implements OnInit {
         }
       });
     } else {
-      this.tmdbService.getTvShowVideos(this.mediaId).subscribe(data => {
+      this.tvService.getTvShowVideos(this.mediaId).subscribe(data => {
         if (data && data.results && data.results.length > 0) {
           const trailer = data.results.find((video: any) =>
             video.type === 'Trailer' && video.site === 'YouTube'
@@ -81,11 +82,11 @@ export class MovieDetailsComponent implements OnInit {
 
   getMediaCredits() {
     if (this.mediaType === 'movie') {
-      this.tmdbService.getMovieCredits(this.mediaId).subscribe(data => {
+      this.moviesService.getMovieCredits(this.mediaId).subscribe(data => {
         this.cast = data.cast
       })
     } else {
-      this.tmdbService.getTvShowCredits(this.mediaId).subscribe(data => {
+      this.tvService.getTvShowCredits(this.mediaId).subscribe(data => {
         this.cast = data.cast
       })
     }
