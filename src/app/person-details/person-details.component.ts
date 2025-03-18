@@ -17,6 +17,7 @@ export class PersonDetailsComponent implements OnInit {
   person: any;
   combinedCredits: any[] = [];
   private routeSub!: Subscription
+  
 
   constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private location: Location) { }
 
@@ -36,10 +37,10 @@ export class PersonDetailsComponent implements OnInit {
       this.person = data;
     })
 
-    this.tmdbService.getPersonCombinedCredits(this.personId).subscribe(data => {
-      this.combinedCredits = data.cast.sort((a: any, b: any) => 
-        new Date(b.release_date).getTime() - new Date(a.release_date).getTime()
-      )
+    this.tmdbService.getPersonCombinedCredits(this.personId).subscribe(credits => {
+      this.combinedCredits = [...credits.cast, ...credits.crew].filter(credit => credit.popularity).sort((a, b) => {
+        return(b.popularity || 0) - (a.popularity || 0);
+      }).slice(0, 15)
     })
   }
 
