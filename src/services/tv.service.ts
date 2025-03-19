@@ -20,4 +20,8 @@ export class TvService {
     getTvShowCredits(tvId: number): Observable<any> {
         return this.http.get(`${environment.apiUrl}/tv/${tvId}/credits?api_key=${environment.apiKey}`);
     }
+
+    getTvShowDiscover(pageNumber: number): Observable<any> {
+        return this.http.get(`${environment.apiUrl}/discover/tv?api_key=${environment.apiKey}&page=${pageNumber}`)
+    }   
 }

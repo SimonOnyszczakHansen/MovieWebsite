@@ -1,1 +1,8 @@
-<p>tv-series works!</p>
+<div class="container">
+    <div *ngFor="let tv of tvSeries">
+        <div class="series-card" (click)="goToDetails(tv)">
+            <img [src]="'https://image.tmdb.org/t/p/w500' + tv.poster_path">
+            <h1>{{ tv.name }}</h1>
+        </div>
+    </div>
+</div>
