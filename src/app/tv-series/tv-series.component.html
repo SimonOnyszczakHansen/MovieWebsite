@@ -1,11 +1,14 @@
 <div class="container">
-    <div *ngFor="let tv of tvSeries">
-        <div class="series-card" (click)="goToDetails(tv)">
-            <img [src]="'https://image.tmdb.org/t/p/w500' + tv.poster_path">
-            <div class="tv-info">
-                <h1 class="tv-title">{{ tv.name }}</h1>
-                <p class="tv-release-date">{{ tv.first_air_date | date: "d MMMM yyyy"}}</p>
+    <div class="tv-container">
+        <div *ngFor="let tv of tvSeries">
+            <div class="series-card" (click)="goToDetails(tv)">
+                <img [src]="'https://image.tmdb.org/t/p/w500' + tv.poster_path">
+                <div class="tv-info">
+                    <h1 class="tv-title">{{ tv.name }}</h1>
+                    <p class="tv-release-date">{{ tv.first_air_date | date: "d MMMM yyyy"}}</p>
+                </div>
             </div>
         </div>
     </div>
+    <button class="Show-more-btn" (click)="showMore()">Show More</button>
 </div>

@@ -29,4 +29,11 @@ export class TvSeriesComponent implements OnInit{
       this.tvSeries = data.results
     })
   }
+
+  showMore() {
+    this.pageNumber += 1;
+    this.tvservice.getTvShowDiscover(this.pageNumber).subscribe(data => {
+      this.tvSeries = [...this.tvSeries, ...data.results]
+    })
+  }
 }
