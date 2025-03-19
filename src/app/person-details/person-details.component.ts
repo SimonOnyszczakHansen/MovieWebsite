@@ -35,13 +35,34 @@ export class PersonDetailsComponent implements OnInit {
   getPersonDetails() {
     this.actorService.getPersonDetails(this.personId).subscribe(data => {
       this.person = data;
-    })
-
+    });
+  
     this.actorService.getPersonCredits(this.personId).subscribe(credits => {
-      this.combinedCredits = [...credits.cast, ...credits.crew].filter(credit => credit.popularity).sort((a, b) => {
-        return(b.popularity || 0) - (a.popularity || 0);
-      }).slice(0, 15)
-    })
+      const creditMap = new Map();
+  
+      [...credits.cast, ...credits.crew].forEach(credit => {
+        const key = `${credit.media_type}-${credit.id}`;
+        
+        if (creditMap.has(key)) {
+          const existing = creditMap.get(key);
+          existing.roles.push(credit.character || credit.job);
+          if ((credit.popularity || 0) > (existing.popularity || 0)) {
+            existing.popularity = credit.popularity;
+          }
+        } else {
+          creditMap.set(key, {
+            ...credit,
+            roles: [credit.character || credit.job],
+            popularity: credit.popularity || 0
+          });
+        }
+      });
+  
+      this.combinedCredits = Array.from(creditMap.values())
+        .filter(credit => credit.popularity)
+        .sort((a, b) => b.popularity - a.popularity)
+        .slice(0, 15);
+    });
   }
 
   goToMediaDetails(media: any) {

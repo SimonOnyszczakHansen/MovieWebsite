@@ -56,7 +56,7 @@
           </div>
           <div class="credit-info">
             <h3 class="credit-title">{{ credit.title || credit.name }}</h3>
-            <p class="credit-role">{{ credit.character || credit.job }}</p>
+            <p class="credit-role">{{ credit.roles.join(', ') }}</p>
             <span class="credit-year">{{ credit.release_date | date: 'yyyy' }}</span>
           </div>
         </div>
