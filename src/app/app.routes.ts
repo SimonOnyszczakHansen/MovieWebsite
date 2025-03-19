@@ -4,6 +4,7 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { FullCastComponent } from './full-cast/full-cast.component';
 import { MoviesComponent } from './movies/movies.component';
 import { PersonDetailsComponent } from './person-details/person-details.component';
+import { TvSeriesComponent } from './tv-series/tv-series.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -12,4 +13,5 @@ export const routes: Routes = [
     {path: ':mediaType/:id/:title', component: MovieDetailsComponent},
     {path: ':mediaType/:id/:title/cast', component: FullCastComponent},
     {path: 'movies', component: MoviesComponent},
+    {path: 'tv', component: TvSeriesComponent}
 ];

@@ -1,7 +1,66 @@
 <div class="container">
-    <button class="back-button" (click)="goBack()"><i class="fas fa-chevron-left"></i>Back</button>
-    <div *ngIf="person">
-        <img [src]="'https://image.tmdb.org/t/p/w780' + person.profile_path">
-        <h1>{{ person.name }}</h1>
+  <div *ngIf="person" class="person-container">
+    <button class="back-button" (click)="goBack()">
+      <i class="fas fa-chevron-left"></i> Back
+    </button>
+
+    <div class="profile-header">
+      <div class="profile-image">
+        <img [src]="person.profile_path ? 
+                   'https://image.tmdb.org/t/p/w780' + person.profile_path : 
+                   'assets/default-profile.svg'" alt="{{ person.name }}">
+      </div>
+
+      <div class="profile-info">
+        <h1 class="name">{{ person.name }}</h1>
+
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-label">Known For</span>
+            <span class="stat-value">{{ person.known_for_department }}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Birthday</span>
+            <span class="stat-value">{{ person.birthday | date: 'd MMM yyyy' }}</span>
+          </div>
+          <div class="stat-item" *ngIf="person.deathday">
+            <span class="stat-label">Deathday</span>
+            <span class="stat-value">{{ person.deathday | date: 'd MMM yyyy' }}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Place of Birth</span>
+            <span class="stat-value">{{ person.place_of_birth || 'N/A' }}</span>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="bio-section">
+      <h2 class="section-title">Biography</h2>
+      <p class="bio-text" *ngIf="person.biography; else noBio">
+        {{ person.biography }}
+      </p>
+      <ng-template #noBio>
+        <p class="bio-text no-bio">No biography available...</p>
+      </ng-template>
+    </div>
+
+    <div class="filmography-section">
+      <h2 class="section-title">Known For</h2>
+      <div class="filmography-grid">
+        <div class="credit-card" *ngFor="let credit of combinedCredits">
+          <div class="poster-container" (click)="goToMediaDetails(credit)">
+            <img [src]="credit.poster_path ? 
+                        'https://image.tmdb.org/t/p/w300' + credit.poster_path : 
+                        'assets/default-poster.svg'" alt="{{ credit.title || credit.name }}" class="credit-poster">
+          </div>
+          <div class="credit-info">
+            <h3 class="credit-title">{{ credit.title || credit.name }}</h3>
+            <p class="credit-role">{{ credit.roles.join(', ') }}</p>
+            <span class="credit-year">{{ credit.release_date | date: 'yyyy' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

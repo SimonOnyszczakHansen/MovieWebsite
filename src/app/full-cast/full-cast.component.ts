@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TmdbService } from '../../services/tmdb.service';
-import { NgFor, Location} from '@angular/common';
+import { MoviesService } from '../../services/movies.service';
+import { TvService } from '../../services/tv.service';
+import { NgFor, Location, NgIf} from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -16,7 +17,7 @@ export class FullCastComponent implements OnInit {
   mediaId!: number;
   mediaType!: string;
 
-  constructor(private tmdbService: TmdbService, private route: ActivatedRoute, private location: Location, private router: Router) { }
+  constructor(private tvService: TvService, private MoviesService: MoviesService, private route: ActivatedRoute, private location: Location, private router: Router) { }
 
   ngOnInit(): void {
     this.mediaType = this.route.snapshot.paramMap.get('mediaType') || 'movie';
@@ -30,11 +31,11 @@ export class FullCastComponent implements OnInit {
 
   getMediaCredits() {
     if (this.mediaType === 'movie') {
-      this.tmdbService.getMovieCredits(this.mediaId).subscribe(data => {
+      this.MoviesService.getMovieCredits(this.mediaId).subscribe(data => {
         this.cast = data.cast
       })
     } else {
-      this.tmdbService.getTvShowCredits(this.mediaId).subscribe(data => {
+      this.tvService.getTvShowCredits(this.mediaId).subscribe(data => {
         this.cast = data.cast
       })
     }
@@ -42,11 +43,11 @@ export class FullCastComponent implements OnInit {
 
   getMediaDetails() {
     if (this.mediaType === 'movie') {
-      this.tmdbService.getMovieDetails(this.mediaId).subscribe(data => {
+      this.MoviesService.getMovieDetails(this.mediaId).subscribe(data => {
         this.media = data
       })
     } else {
-      this.tmdbService.getTvShowDetails(this.mediaId).subscribe(data => {
+      this.tvService.getTvShowDetails(this.mediaId).subscribe(data => {
         this.media = data
       })
     }

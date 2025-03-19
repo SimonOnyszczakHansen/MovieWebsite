@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TmdbService } from '../../services/tmdb.service';
+import { MoviesService } from '../../services/movies.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -14,14 +14,14 @@ export class MoviesComponent implements OnInit {
   movies: any[] = []
   pageNumber: number = 1;
 
-  constructor(private tmdbService: TmdbService, private router: Router) {}
+  constructor(private moviesService: MoviesService, private router: Router) {}
 
   ngOnInit(): void {
     this.getMoviesDiscover()
   }
 
   getMoviesDiscover() {
-    this.tmdbService.getMoviesDiscover(this.pageNumber).subscribe(data => {
+    this.moviesService.getMoviesDiscover(this.pageNumber).subscribe(data => {
       this.movies = data.results
     })
   }
@@ -32,7 +32,7 @@ export class MoviesComponent implements OnInit {
 
   showMore() {
     this.pageNumber += 1;
-    this.tmdbService.getMoviesDiscover(this.pageNumber).subscribe(data => {
+    this.moviesService.getMoviesDiscover(this.pageNumber).subscribe(data => {
       this.movies = [...this.movies, ...data.results]
     });
   }

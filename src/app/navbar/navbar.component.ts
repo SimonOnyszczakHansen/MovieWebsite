@@ -94,6 +94,7 @@ export class NavbarComponent {
   }
 
   goToTVSeries() {
+    this.router.navigate(['/tv'])
     this.closeMobileMenu()
   }
 
