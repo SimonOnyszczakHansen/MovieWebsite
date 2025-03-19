@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ActorService } from '../../services/actor.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -19,7 +19,7 @@ export class PersonDetailsComponent implements OnInit {
   private routeSub!: Subscription
   
 
-  constructor(private actorService: ActorService, private route: ActivatedRoute, private location: Location) { }
+  constructor(private actorService: ActorService, private route: ActivatedRoute, private location: Location, private router: Router) { }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
@@ -42,6 +42,13 @@ export class PersonDetailsComponent implements OnInit {
         return(b.popularity || 0) - (a.popularity || 0);
       }).slice(0, 15)
     })
+  }
+
+  goToMediaDetails(media: any) {
+    const route = media.media_type === 'tv' ? '/tv' : '/movie'
+    const title = media.title || media.name
+
+    this.router.navigate([route, media.id, title])
   }
 
   goBack() {

@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
-import { MoviesService } from '../../services/movies.service';
 import { NgFor, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TruncatePipe } from '../../shared/pipes/truncate.pipe';

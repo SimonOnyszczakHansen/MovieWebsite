@@ -49,7 +49,7 @@
       <h2 class="section-title">Known For</h2>
       <div class="filmography-grid">
         <div class="credit-card" *ngFor="let credit of combinedCredits">
-          <div class="poster-container">
+          <div class="poster-container" (click)="goToMediaDetails(credit)">
             <img [src]="credit.poster_path ? 
                         'https://image.tmdb.org/t/p/w300' + credit.poster_path : 
                         'assets/default-poster.svg'" alt="{{ credit.title || credit.name }}" class="credit-poster">

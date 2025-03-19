@@ -63,6 +63,10 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 2rem;
   }
+
+  .credit-card {
+    cursor: pointer;
+  }
   
   .credit-poster {
     width: 100%;
