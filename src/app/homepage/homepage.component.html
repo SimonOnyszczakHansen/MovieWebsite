@@ -6,8 +6,10 @@
                     <h1 class="hero-title">{{ heroContent.title || heroContent.name }}</h1>
                     <p class="hero-description">{{ heroContent.overview | truncate:150 }}</p>
                     <div class="hero-details">
-                        <span class="hero-rating"><i class="fas fa-star"></i> {{ heroContent.vote_average | number: '1.1-1'}}</span>
-                        <span class="hero-year">{{ (heroContent.release_date || heroContent.first_air_date) | date: 'yyyy' }}</span>
+                        <span class="hero-rating"><i class="fas fa-star"></i> {{ heroContent.vote_average | number:
+                            '1.1-1'}}</span>
+                        <span class="hero-year">{{ (heroContent.release_date || heroContent.first_air_date) | date:
+                            'yyyy' }}</span>
                     </div>
                     <button class="hero-cta" (click)="goToDetails(heroContent)">
                         <span class="hero-cta-text">Explore Now</span>
@@ -15,16 +17,14 @@
                     </button>
                 </div>
                 <div class="hero-poster">
-                    <img [src]="'https://image.tmdb.org/t/p/w780' + heroContent.backdrop_path" 
-                         alt="{{ heroContent.title || heroContent.name }} poster"
-                         class="hero-image">
+                    <img [src]="'https://image.tmdb.org/t/p/w780' + heroContent.backdrop_path"
+                        alt="{{ heroContent.title || heroContent.name }} poster" class="hero-image">
                     <div class="hero-gradient"></div>
                 </div>
             </div>
         </section>
-    
-        <div class="movie-list">
-        </div>
+
+        <!--Trending Content-->
     </div>
     <div class="movie-list">
         <div class="header">
@@ -40,22 +40,65 @@
                 </label>
             </div>
         </div>
-        <button class="scroll-button left" (click)="scrollLeft()">❮</button>
-        <button class="scroll-button right" (click)="scrollRight()">❯</button>
-        <div class="movieContainer" #movieContainer>
-            <div class="movie-card" 
-                 #firstMovieCard 
-                 *ngFor="let item of combinedContent" 
-                 (click)="goToDetails(item)">
-                
-                <img class="poster" 
-                     [src]="'https://image.tmdb.org/t/p/w500' + item.poster_path" 
-                     alt="{{ item.title || item.name }} poster">
-                
+        <button class="scroll-button left" (click)="scrollLeft(trendingContentContainer)">❮</button>
+        <button class="scroll-button right" (click)="scrollRight(trendingContentContainer)">❯</button>
+        <div class="trendingContentContainer" #trendingContentContainer>
+            <div class="movie-card" #firstMovieCard *ngFor="let item of trendingContent" (click)="goToDetails(item)">
+
+                <img class="poster" [src]="'https://image.tmdb.org/t/p/w500' + item.poster_path"
+                    alt="{{ item.title || item.name }} poster">
+
                 <div class="movie-info">
                     <h1>{{ item.title || item.name }}</h1>
                     <p class="release_date">
                         {{ (item.release_date || item.first_air_date) | date: 'd MMM yyyy' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Top Rated Movies-->
+    <div class="movie-list">
+        <div class="header">
+            <h1>Top Rated Movies</h1>
+        </div>
+        <button class="scroll-button left" (click)="scrollLeft(topRatedMoviesContainer)">❮</button>
+        <button class="scroll-button right" (click)="scrollRight(topRatedMoviesContainer)">❯</button>
+        <div class="topRatedMoviesContainer" #topRatedMoviesContainer>
+            <div class="movie-card" #firstMovieCard *ngFor="let movie of topRatedMovies" (click)="goToMovieDetails(movie)">
+
+                <img class="poster" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+                    alt="{{ movie.title || movie.name }} poster">
+
+                <div class="movie-info">
+                    <h1>{{ movie.title || movie.name }}</h1>
+                    <p class="release_date">
+                        {{ (movie.release_date || movie.first_air_date) | date: 'd MMM yyyy' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Top Rated TvShows-->
+    <div class="movie-list">
+        <div class="header">
+            <h1>Top Rated TV Shows</h1>
+        </div>
+        <button class="scroll-button left" (click)="scrollLeft(topRatedTvContainer)">❮</button>
+        <button class="scroll-button right" (click)="scrollRight(topRatedTvContainer)">❯</button>
+        <div class="topRatedTvContainer" #topRatedTvContainer>
+            <div class="movie-card" #firstMovieCard *ngFor="let tv of topRatedTv" (click)="goToTvDetails(tv)">
+
+                <img class="poster" [src]="'https://image.tmdb.org/t/p/w500' + tv.poster_path"
+                    alt="{{ tv.title || tv.name }} poster">
+
+                <div class="movie-info">
+                    <h1>{{ tv.title || tv.name }}</h1>
+                    <p class="release_date">
+                        {{ (tv.release_date || tv.first_air_date) | date: 'd MMM yyyy' }}
                     </p>
                 </div>
             </div>

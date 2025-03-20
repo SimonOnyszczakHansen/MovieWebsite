@@ -23,5 +23,9 @@ export class TvService {
 
     getTvShowDiscover(pageNumber: number): Observable<any> {
         return this.http.get(`${environment.apiUrl}/discover/tv?api_key=${environment.apiKey}&page=${pageNumber}`)
-    }   
+    }
+
+    getTopRatedTv(): Observable<any>{
+        return this.http.get(`${environment.apiUrl}/tv/top_rated?api_key=${environment.apiKey}`)
+    }
 }

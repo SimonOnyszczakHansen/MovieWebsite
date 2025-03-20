@@ -38,7 +38,9 @@
     background: linear-gradient(90deg, #66D9EF 0%, transparent 100%);
 }
 
-.movieContainer {
+.trendingContentContainer,
+.topRatedMoviesContainer,
+.topRatedTvContainer {
     display: flex;
     gap: 1.5rem;
     overflow-x: auto;
