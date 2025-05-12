@@ -24,4 +24,8 @@ export class MoviesService {
     getMoviesDiscover(pageNumber: number): Observable<any> {
         return this.http.get(`${environment.apiUrl}/discover/movie?api_key=${environment.apiKey}&page=${pageNumber}`)
     }
+
+    getTopRatedMovies(): Observable<any>{
+        return this.http.get(`${environment.apiUrl}/movie/top_rated?api_key=${environment.apiKey}`)
+    }
 }
